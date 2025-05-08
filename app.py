@@ -322,22 +322,22 @@ elif page == "Sekolah Kemdikbud":
                 st.error("Gagal mengambil data atau data tidak tersedia.")
 
 # Petunjuk Umum
-st.markdown("""
-**Petunjuk jika Scraping Gagal:**
-1. Buka website target, klik kanan pada elemen data (tabel, daftar, dll.), lalu pilih "Inspect".
-2. Catat `class`, `id`, atau atribut lain. Contoh:
-   - Faskes: `<div class="faskes-item"><div class="name">RS Umum</div></div>`
-   - Sekolah: `<table class="table-striped"><tr><td>SDN 01</td></tr></table>`
-3. Perbarui selector di kode:
-   - Faskes: `By.CSS_SELECTOR, "div.faskes-item"`
-   - Sekolah: `By.CSS_SELECTOR, "table.table-striped"`
-4. Jika data dimuat via JavaScript, tambah waktu tunggu (`time.sleep(5)` ke `time.sleep(10)`).
-5. Salin HTML elemen dari Developer Tools untuk bantuan lebih lanjut.
+# st.markdown("""
+# **Petunjuk jika Scraping Gagal:**
+# 1. Buka website target, klik kanan pada elemen data (tabel, daftar, dll.), lalu pilih "Inspect".
+# 2. Catat `class`, `id`, atau atribut lain. Contoh:
+#    - Faskes: `<div class="faskes-item"><div class="name">RS Umum</div></div>`
+#    - Sekolah: `<table class="table-striped"><tr><td>SDN 01</td></tr></table>`
+# 3. Perbarui selector di kode:
+#    - Faskes: `By.CSS_SELECTOR, "div.faskes-item"`
+#    - Sekolah: `By.CSS_SELECTOR, "table.table-striped"`
+# 4. Jika data dimuat via JavaScript, tambah waktu tunggu (`time.sleep(5)` ke `time.sleep(10)`).
+# 5. Salin HTML elemen dari Developer Tools untuk bantuan lebih lanjut.
 
-**Alternatif Resmi untuk Sekolah:**
-- Unduh dataset dari [Portal Data Kemendikdasmen](https://data.dikdasmen.go.id/) (CSV/XLSV, diperbarui harian).
-- Contoh: Data satuan pendidikan mencakup nama, alamat, jenjang, dan status.
+# **Alternatif Resmi untuk Sekolah:**
+# - Unduh dataset dari [Portal Data Kemendikdasmen](https://data.dikdasmen.go.id/) (CSV/XLSV, diperbarui harian).
+# - Contoh: Data satuan pendidikan mencakup nama, alamat, jenjang, dan status.
 
-**Legalitas:**
-- Scraping mungkin melanggar ketentuan layanan. Hubungi BPJS Kesehatan atau Kemendikbud untuk akses resmi.
-""")
+# **Legalitas:**
+# - Scraping mungkin melanggar ketentuan layanan. Hubungi BPJS Kesehatan atau Kemendikbud untuk akses resmi.
+# """)
