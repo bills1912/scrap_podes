@@ -318,7 +318,8 @@ elif page == "Fasilitas Pendidikan dari Kemendikbud":
             submit_button = st.form_submit_button("Cari Fasilitas Pendidikan")
     with col2:
         st.subheader("Referensi Kode")
-        referensi_kode = pd.read_csv("https://raw.githubusercontent.com/bills1912/scrap_podes/refs/heads/main/master-kab-kota.csv")
+        referensi_kode = pd.read_csv("https://raw.githubusercontent.com/bills1912/scrap_podes/refs/heads/main/master-kab-kota.csv", sep=";")
+        referensi_kode
         
 
     if submit_button:
