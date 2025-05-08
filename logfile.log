@@ -1,0 +1,198 @@
+2025-05-07 13:41:13,946 - INFO - ====== WebDriver manager ======
+2025-05-07 13:41:16,622 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-07 13:41:18,695 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-07 13:41:20,111 - INFO - Driver [C:\Users\bilva\.wdm\drivers\chromedriver\win64\136.0.7103.92\chromedriver-win32/chromedriver.exe] found in cache
+2025-05-07 13:41:41,235 - ERROR - Gagal memilih provinsi: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00F8FC53+61635]
+	GetHandleVerifier [0x00F8FC94+61700]
+	(No symbol) [0x00DB05D3]
+	(No symbol) [0x00DF899E]
+	(No symbol) [0x00DF8D3B]
+	(No symbol) [0x00E40E12]
+	(No symbol) [0x00E1D2E4]
+	(No symbol) [0x00E3E61B]
+	(No symbol) [0x00E1D096]
+	(No symbol) [0x00DEC840]
+	(No symbol) [0x00DED6A4]
+	GetHandleVerifier [0x01214573+2701795]
+	GetHandleVerifier [0x0120FCF6+2683238]
+	GetHandleVerifier [0x0122AA3E+2793134]
+	GetHandleVerifier [0x00FA6915+155013]
+	GetHandleVerifier [0x00FACFFD+181357]
+	GetHandleVerifier [0x00F974A8+92440]
+	GetHandleVerifier [0x00F97650+92864]
+	GetHandleVerifier [0x00F82040+5296]
+	BaseThreadInitThunk [0x75335D49+25]
+	RtlInitializeExceptionChain [0x772DCFFB+107]
+	RtlGetAppContainerNamedObjectPath [0x772DCF81+561]
+
+2025-05-07 14:13:04,535 - INFO - ====== WebDriver manager ======
+2025-05-07 14:13:06,013 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-07 14:13:07,130 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-07 14:13:08,215 - INFO - Driver [C:\Users\bilva\.wdm\drivers\chromedriver\win64\136.0.7103.92\chromedriver-win32/chromedriver.exe] found in cache
+2025-05-07 14:13:09,840 - INFO - Memulai scraping BPJS Kesehatan...
+2025-05-07 14:13:29,608 - ERROR - Gagal memilih provinsi: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00D9FC53+61635]
+	GetHandleVerifier [0x00D9FC94+61700]
+	(No symbol) [0x00BC05D3]
+	(No symbol) [0x00C0899E]
+	(No symbol) [0x00C08D3B]
+	(No symbol) [0x00C50E12]
+	(No symbol) [0x00C2D2E4]
+	(No symbol) [0x00C4E61B]
+	(No symbol) [0x00C2D096]
+	(No symbol) [0x00BFC840]
+	(No symbol) [0x00BFD6A4]
+	GetHandleVerifier [0x01024573+2701795]
+	GetHandleVerifier [0x0101FCF6+2683238]
+	GetHandleVerifier [0x0103AA3E+2793134]
+	GetHandleVerifier [0x00DB6915+155013]
+	GetHandleVerifier [0x00DBCFFD+181357]
+	GetHandleVerifier [0x00DA74A8+92440]
+	GetHandleVerifier [0x00DA7650+92864]
+	GetHandleVerifier [0x00D92040+5296]
+	BaseThreadInitThunk [0x75335D49+25]
+	RtlInitializeExceptionChain [0x772DCFFB+107]
+	RtlGetAppContainerNamedObjectPath [0x772DCF81+561]
+
+2025-05-07 14:17:49,467 - INFO - Memulai scraping dengan API Jendela Data...
+2025-05-07 14:17:52,679 - ERROR - Gagal mengambil kode wilayah: 404
+2025-05-07 14:17:52,681 - INFO - API gagal, mencoba Selenium
+2025-05-07 14:17:52,682 - INFO - ====== WebDriver manager ======
+2025-05-07 14:17:54,166 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-07 14:17:55,247 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-07 14:17:55,338 - INFO - Driver [C:\Users\bilva\.wdm\drivers\chromedriver\win64\136.0.7103.92\chromedriver-win32/chromedriver.exe] found in cache
+2025-05-07 14:17:56,642 - INFO - Memulai scraping dengan Selenium...
+2025-05-07 14:18:19,838 - ERROR - Gagal mengambil daftar provinsi: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00D9FC53+61635]
+	GetHandleVerifier [0x00D9FC94+61700]
+	(No symbol) [0x00BC05D3]
+	(No symbol) [0x00C0899E]
+	(No symbol) [0x00C08D3B]
+	(No symbol) [0x00C50E12]
+	(No symbol) [0x00C2D2E4]
+	(No symbol) [0x00C4E61B]
+	(No symbol) [0x00C2D096]
+	(No symbol) [0x00BFC840]
+	(No symbol) [0x00BFD6A4]
+	GetHandleVerifier [0x01024573+2701795]
+	GetHandleVerifier [0x0101FCF6+2683238]
+	GetHandleVerifier [0x0103AA3E+2793134]
+	GetHandleVerifier [0x00DB6915+155013]
+	GetHandleVerifier [0x00DBCFFD+181357]
+	GetHandleVerifier [0x00DA74A8+92440]
+	GetHandleVerifier [0x00DA7650+92864]
+	GetHandleVerifier [0x00D92040+5296]
+	BaseThreadInitThunk [0x75335D49+25]
+	RtlInitializeExceptionChain [0x772DCFFB+107]
+	RtlGetAppContainerNamedObjectPath [0x772DCF81+561]
+
+2025-05-07 14:18:22,055 - ERROR - Gagal mengambil data dari kedua metode
+2025-05-07 14:22:26,355 - INFO - Memulai scraping dengan API...
+2025-05-07 14:22:28,742 - WARNING - API https://dapo.kemdikbud.go.id/rekap/dataSekolah gagal: 404
+2025-05-07 14:22:30,538 - WARNING - API https://referensi.data.kemdikbud.go.id/api/sekolah gagal: 404
+2025-05-07 14:22:30,540 - INFO - API gagal, mencoba Selenium
+2025-05-07 14:22:30,540 - INFO - ====== WebDriver manager ======
+2025-05-07 14:22:31,929 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-07 14:22:32,546 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-07 14:22:34,663 - INFO - Driver [C:\Users\bilva\.wdm\drivers\chromedriver\win64\136.0.7103.92\chromedriver-win32/chromedriver.exe] found in cache
+2025-05-07 14:22:36,970 - INFO - Memulai scraping dengan Selenium...
+2025-05-07 14:23:08,469 - ERROR - Gagal mengambil daftar provinsi: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00D9FC53+61635]
+	GetHandleVerifier [0x00D9FC94+61700]
+	(No symbol) [0x00BC05D3]
+	(No symbol) [0x00C0899E]
+	(No symbol) [0x00C08D3B]
+	(No symbol) [0x00C50E12]
+	(No symbol) [0x00C2D2E4]
+	(No symbol) [0x00C4E61B]
+	(No symbol) [0x00C2D096]
+	(No symbol) [0x00BFC840]
+	(No symbol) [0x00BFD6A4]
+	GetHandleVerifier [0x01024573+2701795]
+	GetHandleVerifier [0x0101FCF6+2683238]
+	GetHandleVerifier [0x0103AA3E+2793134]
+	GetHandleVerifier [0x00DB6915+155013]
+	GetHandleVerifier [0x00DBCFFD+181357]
+	GetHandleVerifier [0x00DA74A8+92440]
+	GetHandleVerifier [0x00DA7650+92864]
+	GetHandleVerifier [0x00D92040+5296]
+	BaseThreadInitThunk [0x75335D49+25]
+	RtlInitializeExceptionChain [0x772DCFFB+107]
+	RtlGetAppContainerNamedObjectPath [0x772DCF81+561]
+
+2025-05-07 14:23:10,610 - ERROR - Gagal mengambil data dari kedua metode
+2025-05-07 14:43:45,032 - INFO - Memulai scraping dengan API...
+2025-05-07 14:43:47,883 - WARNING - API https://dapo.kemdikbud.go.id/rekap/dataSekolah gagal: 404
+2025-05-07 14:43:49,906 - WARNING - API https://referensi.data.kemdikbud.go.id/api/sekolah gagal: 404
+2025-05-07 14:43:49,907 - INFO - API gagal, mencoba Selenium
+2025-05-07 14:43:49,908 - INFO - ====== WebDriver manager ======
+2025-05-07 14:43:51,397 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-07 14:43:51,695 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-07 14:43:53,270 - INFO - Driver [C:\Users\bilva\.wdm\drivers\chromedriver\win64\136.0.7103.92\chromedriver-win32/chromedriver.exe] found in cache
+2025-05-07 14:43:55,008 - INFO - Memulai scraping dengan Selenium...
+2025-05-07 14:44:28,856 - ERROR - Gagal mengambil daftar provinsi: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00D9FC53+61635]
+	GetHandleVerifier [0x00D9FC94+61700]
+	(No symbol) [0x00BC05D3]
+	(No symbol) [0x00C0899E]
+	(No symbol) [0x00C08D3B]
+	(No symbol) [0x00C50E12]
+	(No symbol) [0x00C2D2E4]
+	(No symbol) [0x00C4E61B]
+	(No symbol) [0x00C2D096]
+	(No symbol) [0x00BFC840]
+	(No symbol) [0x00BFD6A4]
+	GetHandleVerifier [0x01024573+2701795]
+	GetHandleVerifier [0x0101FCF6+2683238]
+	GetHandleVerifier [0x0103AA3E+2793134]
+	GetHandleVerifier [0x00DB6915+155013]
+	GetHandleVerifier [0x00DBCFFD+181357]
+	GetHandleVerifier [0x00DA74A8+92440]
+	GetHandleVerifier [0x00DA7650+92864]
+	GetHandleVerifier [0x00D92040+5296]
+	BaseThreadInitThunk [0x75335D49+25]
+	RtlInitializeExceptionChain [0x772DCFFB+107]
+	RtlGetAppContainerNamedObjectPath [0x772DCF81+561]
+
+2025-05-07 14:44:30,968 - ERROR - Gagal mengambil data dari kedua metode
+2025-05-07 23:35:04,067 - INFO - Memulai scraping dengan API...
+2025-05-07 23:35:04,959 - WARNING - API https://dapo.kemdikbud.go.id/rekap/dataSekolah gagal: 404
+2025-05-07 23:35:05,317 - WARNING - API https://referensi.data.kemdikbud.go.id/api/sekolah gagal: 404
+2025-05-07 23:35:05,319 - INFO - API gagal, mencoba Selenium
+2025-05-07 23:35:05,320 - INFO - ====== WebDriver manager ======
+2025-05-07 23:35:06,459 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-07 23:35:06,857 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-07 23:35:07,290 - INFO - Driver [C:\Users\bilva\.wdm\drivers\chromedriver\win64\136.0.7103.92\chromedriver-win32/chromedriver.exe] found in cache
+2025-05-07 23:35:09,263 - INFO - Memulai scraping dengan Selenium...
+2025-05-07 23:35:45,245 - ERROR - Gagal mengambil daftar provinsi: Message: 
+Stacktrace:
+	GetHandleVerifier [0x009CFC53+61635]
+	GetHandleVerifier [0x009CFC94+61700]
+	(No symbol) [0x007F05D3]
+	(No symbol) [0x0083899E]
+	(No symbol) [0x00838D3B]
+	(No symbol) [0x00880E12]
+	(No symbol) [0x0085D2E4]
+	(No symbol) [0x0087E61B]
+	(No symbol) [0x0085D096]
+	(No symbol) [0x0082C840]
+	(No symbol) [0x0082D6A4]
+	GetHandleVerifier [0x00C54573+2701795]
+	GetHandleVerifier [0x00C4FCF6+2683238]
+	GetHandleVerifier [0x00C6AA3E+2793134]
+	GetHandleVerifier [0x009E6915+155013]
+	GetHandleVerifier [0x009ECFFD+181357]
+	GetHandleVerifier [0x009D74A8+92440]
+	GetHandleVerifier [0x009D7650+92864]
+	GetHandleVerifier [0x009C2040+5296]
+	BaseThreadInitThunk [0x75335D49+25]
+	RtlInitializeExceptionChain [0x772DCFFB+107]
+	RtlGetAppContainerNamedObjectPath [0x772DCF81+561]
+
+2025-05-07 23:35:47,485 - ERROR - Gagal mengambil data dari kedua metode
