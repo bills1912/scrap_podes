@@ -305,13 +305,18 @@ if page == "Fasilitas Kesehatan":
                 st.error("Gagal mengambil data atau data tidak tersedia.")
 
 elif page == "Fasilitas Pendidikan dari Kemendikbud":
-    st.title("Scraping Data Fasilitas Pendidikan dari Kemendikbud")
-    with st.form("form_sekolah"):
-        st.write("Masukkan Parameter Pencarian:")
-        kabkot = st.text_input("Kabupaten/Kota", placeholder="Contoh: 003000")
-        jenis_faspend = st.selectbox("Jenis Faskes", ["SD", "MI", "SMP", "MTS", "SMA", "MA", "SMK", "SDLB", "SMPLB", 
-                                                      "SMALB", "SLB", "TK", "KB", "TPA", "SPS", "PKMB", "Kursus", "SKB"])
-        submit_button = st.form_submit_button("Cari Fasilitas Pendidikan")
+    col1, col2 = st.columns([3, 1])
+    with col1:
+        st.title("Scraping Data Fasilitas Pendidikan dari Kemendikbud")
+        with st.form("form_sekolah"):
+            st.write("Masukkan Parameter Pencarian:")
+            kabkot = st.text_input("Kode Kabupaten/Kota", placeholder="Contoh: 003000")
+            jenis_faspend = st.selectbox("Jenis Faskes", ["SD", "MI", "SMP", "MTS", "SMA", "MA", "SMK", "SDLB", "SMPLB", 
+                                                        "SMALB", "SLB", "TK", "KB", "TPA", "SPS", "PKMB", "Kursus", "SKB"])
+            submit_button = st.form_submit_button("Cari Fasilitas Pendidikan")
+    with col2:
+        st.title("Tabel Referensi Kode Kabupaten/Kota")
+        # referensi_kode = pd.read_csv()
 
     if submit_button:
         with st.spinner("Mengambil data dari Sekolah Kita..."):
