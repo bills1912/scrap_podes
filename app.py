@@ -312,7 +312,7 @@ elif page == "Fasilitas Pendidikan dari Kemendikbud":
         st.subheader("Pencarian Fasilitas Pendidikan")
         with st.form("form_sekolah"):
             st.write("Masukkan Parameter Pencarian:")
-            kabkot = st.text_input("Kode Kabupaten/Kota", placeholder="Contoh: 003000")
+            kabkot = st.text_input("Kode Kabupaten/Kota", placeholder="Contoh: 003000", help="Untuk kode dengan 5 digit, tambahkan 0 di depan.")
             jenis_faspend = st.selectbox("Jenis Faskes", ["SD", "MI", "SMP", "MTS", "SMA", "MA", "SMK", "SDLB", "SMPLB", 
                                                         "SMALB", "SLB", "TK", "KB", "TPA", "SPS", "PKMB", "Kursus", "SKB"])
             submit_button = st.form_submit_button("Cari Fasilitas Pendidikan")
