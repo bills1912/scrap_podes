@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import time
 
+st.set_page_config(layout="wide")
 # Fungsi untuk scraping data dari website Aplicares (BPJS Kesehatan)
 def scrape_aplicares(provinsi, jenis_faskes):
     options = webdriver.ChromeOptions()
@@ -305,9 +306,10 @@ if page == "Fasilitas Kesehatan":
                 st.error("Gagal mengambil data atau data tidak tersedia.")
 
 elif page == "Fasilitas Pendidikan dari Kemendikbud":
-    col1, col2 = st.columns([3, 1])
+    st.title("Scraping Data Fasilitas Pendidikan dari Kemendikbud")
+    col1, col2 = st.columns([2, 2])
     with col1:
-        st.title("Scraping Data Fasilitas Pendidikan dari Kemendikbud")
+        st.subheader("Pencarian Fasilitas Pendidikan")
         with st.form("form_sekolah"):
             st.write("Masukkan Parameter Pencarian:")
             kabkot = st.text_input("Kode Kabupaten/Kota", placeholder="Contoh: 003000")
@@ -315,8 +317,8 @@ elif page == "Fasilitas Pendidikan dari Kemendikbud":
                                                         "SMALB", "SLB", "TK", "KB", "TPA", "SPS", "PKMB", "Kursus", "SKB"])
             submit_button = st.form_submit_button("Cari Fasilitas Pendidikan")
     with col2:
-        st.title("Tabel Referensi Kode Kabupaten/Kota")
-        # referensi_kode = pd.read_csv()
+        st.subheader("Referensi Kode")
+        referensi_kode = pd.read_excel("https://github.com/bills1912/scrap_podes/blob/main/master-kab-kota.xlsx", engine="openpyxl")
 
     if submit_button:
         with st.spinner("Mengambil data dari Sekolah Kita..."):

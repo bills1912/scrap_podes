@@ -3,3 +3,4 @@ selenium==4.32.0
 bs4
 pandas
 webdriver-manager==4.0.2
+openpyxl
