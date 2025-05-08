@@ -203,14 +203,14 @@ def scrape_kemdikbud(kode_kabkot, fasilitas_pendidikan):
             try:
                 # Klik marker untuk membuka pop-up
                 driver.execute_script("arguments[0].click();", marker)  # Gunakan JavaScript untuk klik jika tidak interactable
-                st.write(f"Mengklik marker ke-{index + 1}...")
+                # st.write(f"Mengklik marker ke-{index + 1}...")
                 time.sleep(1)  # Tunggu pop-up muncul
 
                 # Tunggu hingga pop-up muncul
                 popup = wait.until(
                     EC.presence_of_element_located((By.CSS_SELECTOR, ".leaflet-popup-content, .popup, div.popup-content"))
                 )
-                st.write("Pop-up ditemukan.")
+                # st.write("Pop-up ditemukan.")
 
                 # Ambil konten pop-up
                 soup = BeautifulSoup(popup.get_attribute('innerHTML'), 'html.parser')
