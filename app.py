@@ -285,10 +285,10 @@ def scrape_kemdikbud(kode_kabkot, fasilitas_pendidikan):
 
 # Aplikasi Streamlit dengan Menu di Sidebar
 st.sidebar.title("Menu Scraping")
-page = st.sidebar.radio("Pilih Halaman", ["Faskes BPJS Kesehatan", "Sekolah Kemdikbud"])
+page = st.sidebar.radio("Pilih Halaman", ["Fasilitas Kesehatan", "Fasilitas Pendidikan dari Kemendikbud"])
 
-if page == "Faskes BPJS Kesehatan":
-    st.title("Scraping Faskes BPJS Kesehatan")
+if page == "Fasilitas Kesehatan":
+    st.title("Scraping Data Falisilitas Kesehatan dari website BPJS")
     with st.form("form_faskes"):
         st.write("Pilih parameter pencarian:")
         provinsi = st.text_input("Provinsi", value="Jawa Barat")
@@ -304,8 +304,8 @@ if page == "Faskes BPJS Kesehatan":
             else:
                 st.error("Gagal mengambil data atau data tidak tersedia.")
 
-elif page == "Sekolah Kemdikbud":
-    st.title("Scraping Data Sekolah Kemdikbud")
+elif page == "Fasilitas Pendidikan dari Kemendikbud":
+    st.title("Scraping Data Fasilitas Pendidikan dari Kemendikbud")
     with st.form("form_sekolah"):
         st.write("Masukkan Parameter Pencarian:")
         kabkot = st.text_input("Kabupaten/Kota")
