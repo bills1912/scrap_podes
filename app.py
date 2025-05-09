@@ -6,10 +6,12 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 import pandas as pd
 import time
+import requests
 
 st.set_page_config(layout="wide")
 # Fungsi untuk scraping data dari website Aplicares (BPJS Kesehatan)
@@ -246,37 +248,187 @@ def scrape_kemdikbud(kode_kabkot, fasilitas_pendidikan):
         df = pd.DataFrame(data)
         return df
 
-        # soup = BeautifulSoup(driver.page_source, 'html.parser')
-        # faspend = soup.find_all(['img'], class_=['leaflet-marker-icon leaflet-zoom-animated leaflet-interactive'])
-        # if not faspend:
-        #     st.warning("Elemen marker/div dengan class 'faskes-item' atau 'marker' tidak ditemukan.")
-        #     faspend = soup.find_all(['img'], class_=['leaflet-marker-icon leaflet-zoom-animated leaflet-interactive'])
-        #     st.write("Mencoba semua div/marker")
-        #     if not faspend:
-        #         st.error("Tidak ada elemen berulang ditemukan.")
-        #         return None
+    except Exception as e:
+        st.error(f"Error saat scraping: {e}")
+        return None
+    finally:
+        driver.quit()
+        
+def scrape_dapodik(kode_prov):
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    wait = WebDriverWait(driver, 15)
 
-        # data = []
-        # headers = None
-        # for marker in faspend:
-        #     row = {}
-        #     if marker:
-        #         row['Fasilitas Pendidikan'] = marker
-        #     # if address:
-        #     #     row['Address'] = address.text.strip()
-        #     # if faskes_type:
-        #     #     row['Type'] = faskes_type.text.strip()
-        #     if row:
-        #         data.append(row)
-        #     if not headers and row:
-        #         headers = list(row.keys())
+    try:
+        url = f"https://dapo.dikdasmen.go.id/sp/1/{kode_prov}"
+        driver.get(url)
+        st.write("Memuat halaman...")
+        time.sleep(5)  # Tunggu halaman dinamis dimuat
+        
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
+        table = soup.find('table', {'id':'DataTables_Table_0'})
+        table_header = table.find('thead')
+        table_body = table.find('tbody')
+        rows = table_body.find_all('tr')
+        # st.write(f"{rows}")
+        
+        data = {}
+        for row in rows:
+            try:
+                micro_data = {}
+                
+                wilayah = row.find_all('td')[1].find('a')
+                # Data TK
+                total_tk = row.find_all('td')[5]
+                total_tk_n = row.find_all('td')[6]
+                total_tk_s = row.find_all('td')[7]
+                
+                # Data KB
+                total_kb = row.find_all('td')[8]
+                total_kb_n = row.find_all('td')[9]
+                total_kb_s = row.find_all('td')[10]
+                
+                # Data TPA
+                total_tpa = row.find_all('td')[11]
+                total_tpa_n = row.find_all('td')[12]
+                total_tpa_s = row.find_all('td')[13]
+                
+                # Data SPS
+                total_sps = row.find_all('td')[14]
+                total_sps_n = row.find_all('td')[15]
+                total_sps_s = row.find_all('td')[16]
+                
+                # Data PKBM
+                total_pkbm = row.find_all('td')[17]
+                total_pkbm_n = row.find_all('td')[18]
+                total_pkbm_s = row.find_all('td')[19]
+                
+                # Data SKB
+                total_skb = row.find_all('td')[20]
+                total_skb_n = row.find_all('td')[21]
+                total_skb_s = row.find_all('td')[22]
+                
+                # Data SD
+                total_sd = row.find_all('td')[23]
+                total_sd_n = row.find_all('td')[24]
+                total_sd_s = row.find_all('td')[25]
+                
+                # Data SMP
+                total_smp = row.find_all('td')[26]
+                total_smp_n = row.find_all('td')[27]
+                total_smp_s = row.find_all('td')[28]
+                
+                # Data SMA
+                total_sma = row.find_all('td')[29]
+                total_sma_n = row.find_all('td')[30]
+                total_sma_s = row.find_all('td')[31]
+                
+                # Data SMK
+                total_smk = row.find_all('td')[32]
+                total_smk_n = row.find_all('td')[33]
+                total_smk_s = row.find_all('td')[34]
+                
+                # Data SLB
+                total_slb = row.find_all('td')[35]
+                total_slb_n = row.find_all('td')[36]
+                total_slb_s = row.find_all('td')[37]
+                
+                
+                micro_data['TK'] = {'Total': total_tk.text.strip(), 'Negeri': total_tk_n.text.strip(), 'Swasta': total_tk_s.text.strip()}
+                micro_data['KB'] = {'Total': total_kb.text.strip(), 'Negeri': total_kb_n.text.strip(), 'Swasta': total_kb_s.text.strip()}
+                micro_data['TPA'] = {'Total': total_tpa.text.strip(), 'Negeri': total_tpa_n.text.strip(), 'Swasta': total_tpa_s.text.strip()}
+                micro_data['SPS'] = {'Total': total_sps.text.strip(), 'Negeri': total_sps_n.text.strip(), 'Swasta': total_sps_s.text.strip()}
+                micro_data['PKBM'] = {'Total': total_pkbm.text.strip(), 'Negeri': total_pkbm_n.text.strip(), 'Swasta': total_pkbm_s.text.strip()}
+                micro_data['SKB'] = {'Total': total_skb.text.strip(), 'Negeri': total_skb_n.text.strip(), 'Swasta': total_skb_s.text.strip()}
+                micro_data['SD'] = {'Total': total_sd.text.strip(), 'Negeri': total_sd_n.text.strip(), 'Swasta': total_sd_s.text.strip()}
+                micro_data['SMP'] = {'Total': total_smp.text.strip(), 'Negeri': total_smp_n.text.strip(), 'Swasta': total_smp_s.text.strip()}
+                micro_data['SMA'] = {'Total': total_sma.text.strip(), 'Negeri': total_sma_n.text.strip(), 'Swasta': total_sma_s.text.strip()}
+                micro_data['SMK'] = {'Total': total_smk.text.strip(), 'Negeri': total_smk_n.text.strip(), 'Swasta': total_smk_s.text.strip()}
+                micro_data['SLB'] = {'Total': total_slb.text.strip(), 'Negeri': total_slb_n.text.strip(), 'Swasta': total_slb_s.text.strip()}
+                if micro_data:
+                    data[wilayah.text.strip()] = {
+                        'TK':micro_data['TK'], 
+                        'KB':micro_data['KB'], 
+                        'TPA':micro_data['TPA'], 
+                        'SPS':micro_data['SPS'], 
+                        'PKBM':micro_data['PKBM'], 
+                        'SKB':micro_data['SKB'], 
+                        'SD':micro_data['SD'], 
+                        'SMP':micro_data['SMP'], 
+                        'SMA':micro_data['SMA'], 
+                        'SMK':micro_data['SMK'], 
+                        'SLB':micro_data['SLB']
+                        }
+                else:
+                    st.warning(f"Tidak ada data valid yang di-scrape.")
 
-        # if not data:
-        #     st.error("Tidak ada data yang dapat diekstrak dari elemen marker/div.")
-        #     return None
+            except Exception as e:
+                st.warning(f"Gagal memproses tabel")
+                continue
 
-        # df = pd.DataFrame(data, columns=headers or ['Fasilitas Pendidikan'])
-        # return df
+        if not data:
+            st.error("Tidak ada data yang dapat diekstrak dari pop-up marker.")
+            return None
+
+        return data
+
+    except Exception as e:
+        st.error(f"Error saat scraping: {e}")
+        return None
+    finally:
+        driver.quit()
+        
+# Fungsi untuk scraping data dari website Kemdikbud
+def scrape_bni(kode_prov, kode_kabkot):
+    options = Options()
+    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
+    options.add_argument("--disable-blink-features=AutomationControlled")
+    options.add_argument("--disable-infobars")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--no-sandbox")
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    wait = WebDriverWait(driver, 15)
+
+    try:
+        url = f"https://bri.co.id/lokasi#page-1"
+        driver.get(url)
+        st.write("Memuat halaman...")
+        time.sleep(5)  # Tunggu halaman dinamis dimuat
+        st.write(f"Halaman dimuat.")
+        
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
+        # table = soup.find('table', class_='table')
+        st.write(soup.prettify())
+        
+        data_list = []
+        # while True:
+        #     table_body = table.find_elements(By.TAG_NAME, "tbody")
+        #     rows = table_body.find_elements(By.TAG_NAME, "tr")
+        #     for row in rows:  # Lewati header
+        #         cells = row.find_elements(By.TAG_NAME, "td")
+        #         if len(cells) >= 2:
+        #             agen_data = {
+        #                 "Nama Agen": cells[0].text.strip(),
+        #                 "Alamat": cells[1].text.strip(),
+        #                 "Kecamatan": cells[2].text.strip(),
+        #                 "Kabupaten/Kota": cells[3].text.strip(),
+        #                 "Provinsi": cells[4].text.strip(),
+        #             }
+        #             data_list.append(agen_data)
+
+        #     # Cek apakah ada tombol "Next"
+        #     try:
+        #         next_button = driver.find_element(By.CSS_SELECTOR, "input.rgPageNext")
+        #         if "return false" in next_button.get_attribute("onclick"):
+        #             st.write("Halaman terakhir tercapai.")
+        #             break
+        #         next_button.click()
+        #         st.write("Berpindah ke halaman berikutnya...")
+        #         time.sleep(3)  # Tunggu halaman baru dimuat
+        #     except:
+        #         st.write("Tombol 'Next' tidak ditemukan atau halaman terakhir.")
+        #         break
 
     except Exception as e:
         st.error(f"Error saat scraping: {e}")
@@ -286,7 +438,8 @@ def scrape_kemdikbud(kode_kabkot, fasilitas_pendidikan):
 
 # Aplikasi Streamlit dengan Menu di Sidebar
 st.sidebar.title("Menu Scraping")
-page = st.sidebar.radio("Pilih Halaman", ["Fasilitas Kesehatan", "Fasilitas Pendidikan dari Kemendikbud"])
+with st.sidebar:
+    page = st.radio("Pilih Halaman", ["Fasilitas Kesehatan", "Fasilitas Pendidikan dari Kemendikbud", "Perbankan"])
 
 if page == "Fasilitas Kesehatan":
     st.title("Scraping Data Falisilitas Kesehatan dari website BPJS")
@@ -307,29 +460,81 @@ if page == "Fasilitas Kesehatan":
 
 elif page == "Fasilitas Pendidikan dari Kemendikbud":
     st.title("Scraping Data Fasilitas Pendidikan dari Kemendikbud")
+    tab1, tab2 = st.tabs(["Website Sekolah Kita", "Website Dapodik"])
+    with tab1:
+        col1, col2 = st.columns([2, 2])
+        with col1:
+            st.subheader("Pencarian Fasilitas Pendidikan")
+            with st.form("form_sekolah_kita"):
+                st.write("Masukkan Parameter Pencarian:")
+                kabkot = st.text_input("Kode Kabupaten/Kota", placeholder="Contoh: 003000", help="Untuk kode dengan 5 digit, tambahkan 0 di depan.")
+                jenis_faspend = st.selectbox("Jenis Faskes", ["SD", "MI", "SMP", "MTS", "SMA", "MA", "SMK", "SDLB", "SMPLB", 
+                                                            "SMALB", "SLB", "TK", "KB", "TPA", "SPS", "PKMB", "Kursus", "SKB"])
+                submit_button = st.form_submit_button("Cari Fasilitas Pendidikan")
+        with col2:
+            st.subheader("Referensi Kode")
+            referensi_kode = pd.read_csv("https://raw.githubusercontent.com/bills1912/scrap_podes/refs/heads/main/master-kab-kota.csv", sep=";")
+            st.dataframe(referensi_kode)
+            
+
+        if submit_button:
+            with st.spinner("Mengambil data dari Sekolah Kita..."):
+                result_df = scrape_kemdikbud(kabkot, jenis_faspend)
+                if result_df is not None and not result_df.empty:
+                    st.success("Data berhasil diambil!")
+                    st.dataframe(result_df)
+                else:
+                    st.error("Gagal mengambil data atau data tidak tersedia.")
+    with tab2:
+        col1, col2 = st.columns([2, 2])
+        with col1:
+            st.subheader("Pencarian Fasilitas Pendidikan")
+            with st.form("form_dapodik"):
+                st.write("Masukkan Parameter Pencarian:")
+                prov = st.text_input("Kode Provinsi", placeholder="Contoh: 003000", help="Untuk kode dengan 5 digit, tambahkan 0 di depan.")
+                submit_button = st.form_submit_button("Cari Fasilitas Pendidikan")
+        with col2:
+            st.subheader("Referensi Kode")
+            referensi_kode = pd.read_csv("https://raw.githubusercontent.com/bills1912/scrap_podes/refs/heads/main/master-kab-kota.csv", sep=";")
+            st.dataframe(referensi_kode)
+            
+
+        if submit_button:
+            with st.spinner("Mengambil data dari Sekolah Kita..."):
+                result_df = scrape_dapodik(prov)
+                if result_df:
+                    st.success("Data berhasil diambil!")
+                    st.write(result_df)
+                else:
+                    st.error("Gagal mengambil data atau data tidak tersedia.")
+        
+                
+elif page == "Perbankan":
+    st.title("Scraping Data Fasilitas Perbankan dari website BNI")
     col1, col2 = st.columns([2, 2])
     with col1:
-        st.subheader("Pencarian Fasilitas Pendidikan")
-        with st.form("form_sekolah"):
+        st.subheader("Pencarian Fasilitas Perbankan (BNI)")
+        with st.form("form_bank"):
             st.write("Masukkan Parameter Pencarian:")
-            kabkot = st.text_input("Kode Kabupaten/Kota", placeholder="Contoh: 003000", help="Untuk kode dengan 5 digit, tambahkan 0 di depan.")
-            jenis_faspend = st.selectbox("Jenis Faskes", ["SD", "MI", "SMP", "MTS", "SMA", "MA", "SMK", "SDLB", "SMPLB", 
-                                                        "SMALB", "SLB", "TK", "KB", "TPA", "SPS", "PKMB", "Kursus", "SKB"])
-            submit_button = st.form_submit_button("Cari Fasilitas Pendidikan")
+            prov = st.text_input("Kode Provinsi", placeholder="Contoh: 1")
+            kabkot = st.text_input("Kode Kabupaten/Kota", placeholder="Contoh: 12")
+            submit_button = st.form_submit_button("Cari Fasilitas Perbankan")
     with col2:
         st.subheader("Referensi Kode")
-        referensi_kode = pd.read_csv("https://raw.githubusercontent.com/bills1912/scrap_podes/refs/heads/main/master-kab-kota.csv", sep=";")
-        referensi_kode
+        # referensi_kode = pd.read_csv("https://raw.githubusercontent.com/bills1912/scrap_podes/refs/heads/main/master-kab-kota.csv", sep=";")
+        # st.dataframe(referensi_kode)
         
 
     if submit_button:
-        with st.spinner("Mengambil data dari Sekolah Kita..."):
-            result_df = scrape_kemdikbud(kabkot, jenis_faspend)
+        with st.spinner("Mengambil data dari website Perbankan"):
+            result_df = scrape_bni(prov, kabkot)
             if result_df is not None and not result_df.empty:
                 st.success("Data berhasil diambil!")
                 st.dataframe(result_df)
             else:
                 st.error("Gagal mengambil data atau data tidak tersedia.")
+
+
 
 # Petunjuk Umum
 # st.markdown("""
