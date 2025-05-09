@@ -6,12 +6,14 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import streamlit.components.v1 as components
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 import pandas as pd
 import time
-import requests
+import base64
+import json
 
 st.set_page_config(layout="wide")
 # Fungsi untuk scraping data dari website Aplicares (BPJS Kesehatan)
@@ -439,7 +441,11 @@ def scrape_bni(kode_prov, kode_kabkot):
 # Aplikasi Streamlit dengan Menu di Sidebar
 st.sidebar.title("Menu Scraping")
 with st.sidebar:
-    page = st.radio("Pilih Halaman", ["Fasilitas Kesehatan", "Fasilitas Pendidikan dari Kemendikbud", "Perbankan"])
+    page = st.radio("Pilih Halaman", [
+        "Fasilitas Kesehatan", 
+        "Fasilitas Pendidikan dari Kemendikbud",
+        #   "Perbankan"
+        ])
 
 if page == "Fasilitas Kesehatan":
     st.title("Scraping Data Falisilitas Kesehatan dari website BPJS")
@@ -459,6 +465,52 @@ if page == "Fasilitas Kesehatan":
                 st.error("Gagal mengambil data atau data tidak tersedia.")
 
 elif page == "Fasilitas Pendidikan dari Kemendikbud":
+    def download_button(object_to_download, download_filename):
+        """
+        Generates a link to download the given object_to_download.
+        Params:
+        ------
+        object_to_download:  The object to be downloaded.
+        download_filename (str): filename and extension of file. e.g. mydata.csv,
+        Returns:
+        -------
+        (str): the anchor tag to download object_to_download
+        """
+        if isinstance(object_to_download, pd.DataFrame):
+            object_to_download = object_to_download.to_csv(index=False)
+
+        # Try JSON encode for everything else
+        else:
+            object_to_download = json.dumps(object_to_download)
+
+        try:
+            # some strings <-> bytes conversions necessary here
+            b64 = base64.b64encode(object_to_download.encode()).decode()
+
+        except AttributeError as e:
+            b64 = base64.b64encode(object_to_download).decode()
+
+        dl_link = f"""
+        <html>
+        <head>
+        <title>Start Auto Download file</title>
+        <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script>
+        $('<a href="data:text/csv;base64,{b64}" download="{download_filename}">')[0].click()
+        </script>
+        </head>
+        </html>
+        """
+        return dl_link
+
+
+    def download_df(data, filename):
+        # df = pd.DataFrame(st.session_state.col_values, columns=[st.session_state.col_name])
+        components.html(
+            download_button(data, filename),
+            height=0,
+        )
+            
     st.title("Scraping Data Fasilitas Pendidikan dari Kemendikbud")
     tab1, tab2 = st.tabs(["Website Sekolah Kita", "Website Dapodik"])
     with tab1:
@@ -468,7 +520,7 @@ elif page == "Fasilitas Pendidikan dari Kemendikbud":
             with st.form("form_sekolah_kita"):
                 st.write("Masukkan Parameter Pencarian:")
                 kabkot = st.text_input("Kode Kabupaten/Kota", placeholder="Contoh: 003000", help="Untuk kode dengan 5 digit, tambahkan 0 di depan.")
-                jenis_faspend = st.selectbox("Jenis Faskes", ["SD", "MI", "SMP", "MTS", "SMA", "MA", "SMK", "SDLB", "SMPLB", 
+                jenis_faspend = st.selectbox("Jenis Fasilitas Pendidikan", ["SD", "MI", "SMP", "MTS", "SMA", "MA", "SMK", "SDLB", "SMPLB", 
                                                             "SMALB", "SLB", "TK", "KB", "TPA", "SPS", "PKMB", "Kursus", "SKB"])
                 submit_button = st.form_submit_button("Cari Fasilitas Pendidikan")
         with col2:
@@ -504,7 +556,13 @@ elif page == "Fasilitas Pendidikan dari Kemendikbud":
                 result_df = scrape_dapodik(prov)
                 if result_df:
                     st.success("Data berhasil diambil!")
-                    st.write(result_df)
+                    st.download_button(
+                        label="Download Data",
+                        data=json.dumps(result_df).encode('utf-8'),
+                        file_name="data.json",
+                        mime="application/json",
+                        icon=":material/download:",
+                    )
                 else:
                     st.error("Gagal mengambil data atau data tidak tersedia.")
         
@@ -518,7 +576,7 @@ elif page == "Perbankan":
             st.write("Masukkan Parameter Pencarian:")
             prov = st.text_input("Kode Provinsi", placeholder="Contoh: 1")
             kabkot = st.text_input("Kode Kabupaten/Kota", placeholder="Contoh: 12")
-            submit_button = st.form_submit_button("Cari Fasilitas Perbankan")
+            submit_button = st.download("Cari Fasilitas Perbankan")
     with col2:
         st.subheader("Referensi Kode")
         # referensi_kode = pd.read_csv("https://raw.githubusercontent.com/bills1912/scrap_podes/refs/heads/main/master-kab-kota.csv", sep=";")
@@ -530,7 +588,9 @@ elif page == "Perbankan":
             result_df = scrape_bni(prov, kabkot)
             if result_df is not None and not result_df.empty:
                 st.success("Data berhasil diambil!")
-                st.dataframe(result_df)
+                col1, col2 = st.columns([2, 2])
+                with col1:
+                    st.selectbox(result_df.keys())
             else:
                 st.error("Gagal mengambil data atau data tidak tersedia.")
 
