@@ -381,68 +381,12 @@ def scrape_dapodik(kode_prov):
     finally:
         driver.quit()
         
-# Fungsi untuk scraping data dari website Kemdikbud
-def scrape_bni(kode_prov, kode_kabkot):
-    options = Options()
-    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
-    options.add_argument("--disable-blink-features=AutomationControlled")
-    options.add_argument("--disable-infobars")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--no-sandbox")
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-    wait = WebDriverWait(driver, 15)
-
-    try:
-        url = f"https://bri.co.id/lokasi#page-1"
-        driver.get(url)
-        st.write("Memuat halaman...")
-        time.sleep(5)  # Tunggu halaman dinamis dimuat
-        st.write(f"Halaman dimuat.")
-        
-        soup = BeautifulSoup(driver.page_source, 'html.parser')
-        # table = soup.find('table', class_='table')
-        st.write(soup.prettify())
-        
-        data_list = []
-        # while True:
-        #     table_body = table.find_elements(By.TAG_NAME, "tbody")
-        #     rows = table_body.find_elements(By.TAG_NAME, "tr")
-        #     for row in rows:  # Lewati header
-        #         cells = row.find_elements(By.TAG_NAME, "td")
-        #         if len(cells) >= 2:
-        #             agen_data = {
-        #                 "Nama Agen": cells[0].text.strip(),
-        #                 "Alamat": cells[1].text.strip(),
-        #                 "Kecamatan": cells[2].text.strip(),
-        #                 "Kabupaten/Kota": cells[3].text.strip(),
-        #                 "Provinsi": cells[4].text.strip(),
-        #             }
-        #             data_list.append(agen_data)
-
-        #     # Cek apakah ada tombol "Next"
-        #     try:
-        #         next_button = driver.find_element(By.CSS_SELECTOR, "input.rgPageNext")
-        #         if "return false" in next_button.get_attribute("onclick"):
-        #             st.write("Halaman terakhir tercapai.")
-        #             break
-        #         next_button.click()
-        #         st.write("Berpindah ke halaman berikutnya...")
-        #         time.sleep(3)  # Tunggu halaman baru dimuat
-        #     except:
-        #         st.write("Tombol 'Next' tidak ditemukan atau halaman terakhir.")
-        #         break
-
-    except Exception as e:
-        st.error(f"Error saat scraping: {e}")
-        return None
-    finally:
-        driver.quit()
 
 # Aplikasi Streamlit dengan Menu di Sidebar
 st.sidebar.title("Menu Scraping")
 with st.sidebar:
     page = st.radio("Pilih Halaman", [
-        "Fasilitas Kesehatan", 
+        # "Fasilitas Kesehatan", 
         "Fasilitas Pendidikan dari Kemendikbud",
         #   "Perbankan"
         ])
@@ -535,6 +479,13 @@ elif page == "Fasilitas Pendidikan dari Kemendikbud":
                 if result_df is not None and not result_df.empty:
                     st.success("Data berhasil diambil!")
                     st.dataframe(result_df)
+                    st.download_button(
+                        f"Unduh Data {jenis_faspend}",
+                        result_df.to_csv(index=False).encode('utf-8'),
+                        f"{kabkot}_{jenis_faspend}.csv",
+                        "text/csv",
+                        key='download-csv'
+                    )
                 else:
                     st.error("Gagal mengambil data atau data tidak tersedia.")
     with tab2:
@@ -565,36 +516,6 @@ elif page == "Fasilitas Pendidikan dari Kemendikbud":
                     )
                 else:
                     st.error("Gagal mengambil data atau data tidak tersedia.")
-        
-                
-elif page == "Perbankan":
-    st.title("Scraping Data Fasilitas Perbankan dari website BNI")
-    col1, col2 = st.columns([2, 2])
-    with col1:
-        st.subheader("Pencarian Fasilitas Perbankan (BNI)")
-        with st.form("form_bank"):
-            st.write("Masukkan Parameter Pencarian:")
-            prov = st.text_input("Kode Provinsi", placeholder="Contoh: 1")
-            kabkot = st.text_input("Kode Kabupaten/Kota", placeholder="Contoh: 12")
-            submit_button = st.download("Cari Fasilitas Perbankan")
-    with col2:
-        st.subheader("Referensi Kode")
-        # referensi_kode = pd.read_csv("https://raw.githubusercontent.com/bills1912/scrap_podes/refs/heads/main/master-kab-kota.csv", sep=";")
-        # st.dataframe(referensi_kode)
-        
-
-    if submit_button:
-        with st.spinner("Mengambil data dari website Perbankan"):
-            result_df = scrape_bni(prov, kabkot)
-            if result_df is not None and not result_df.empty:
-                st.success("Data berhasil diambil!")
-                col1, col2 = st.columns([2, 2])
-                with col1:
-                    st.selectbox(result_df.keys())
-            else:
-                st.error("Gagal mengambil data atau data tidak tersedia.")
-
-
 
 # Petunjuk Umum
 # st.markdown("""
