@@ -16,7 +16,7 @@ import time
 import base64
 import json
 
-chromedriver_autoinstaller.install()
+# chromedriver_autoinstaller.install()
 
 st.set_page_config(layout="wide")
 # Fungsi untuk scraping data dari website Aplicares (BPJS Kesehatan)
