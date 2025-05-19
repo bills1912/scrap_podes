@@ -9,11 +9,14 @@ from selenium.webdriver.support import expected_conditions as EC
 import streamlit.components.v1 as components
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
+import chromedriver_autoinstaller
 from bs4 import BeautifulSoup
 import pandas as pd
 import time
 import base64
 import json
+
+chromedriver_autoinstaller.install()
 
 st.set_page_config(layout="wide")
 # Fungsi untuk scraping data dari website Aplicares (BPJS Kesehatan)
@@ -189,7 +192,10 @@ def scrape_aplicares(provinsi, jenis_faskes):
 def scrape_kemdikbud(kode_kabkot, fasilitas_pendidikan):
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
-    driver = webdriver.Chrome(service='https://github.com/bills1912/scrap_podes/blob/main/chromedriver.exe', options=options)
+    options.add_argument('--no-sandbox')
+    options.add_argument("--disable-infobars")
+    options.add_argument('--disable-dev-shm-usage')
+    driver = webdriver.Chrome(options=options)
     wait = WebDriverWait(driver, 15)
 
     try:
