@@ -189,7 +189,7 @@ def scrape_aplicares(provinsi, jenis_faskes):
 def scrape_kemdikbud(kode_kabkot, fasilitas_pendidikan):
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
-    driver = webdriver.Chrome(executable_path='chromedriver.exe', options=options)
+    driver = webdriver.Chrome(executable_path='https://github.com/bills1912/scrap_podes/blob/main/chromedriver.exe', options=options)
     wait = WebDriverWait(driver, 15)
 
     try:
