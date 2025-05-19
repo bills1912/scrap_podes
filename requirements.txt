@@ -4,3 +4,4 @@ bs4
 pandas
 webdriver-manager==4.0.2
 openpyxl
+chromedriver_autoinstaller
