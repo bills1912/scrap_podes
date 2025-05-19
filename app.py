@@ -195,7 +195,7 @@ def scrape_kemdikbud(kode_kabkot, fasilitas_pendidikan):
     options.add_argument('--no-sandbox')
     options.add_argument("--disable-infobars")
     options.add_argument('--disable-dev-shm-usage')
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     wait = WebDriverWait(driver, 15)
 
     try:
